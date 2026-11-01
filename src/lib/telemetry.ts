@@ -14,16 +14,18 @@ export function trackDownload(os: string, file: string) {
 		});
 		const endpoint = `${apiUrl}/v1/landing/download`;
 
-		if (typeof navigator !== 'undefined' && navigator.sendBeacon) {
-			const blob = new Blob([payload], { type: 'application/json' });
-			navigator.sendBeacon(endpoint, blob);
-		} else if (typeof fetch !== 'undefined') {
+		// Using text/plain guarantees a CORS-safelisted simple request (no OPTIONS preflight),
+		// so browsers do not drop or block the beacon during download navigation.
+		if (typeof fetch !== 'undefined') {
 			fetch(endpoint, {
 				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
+				headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
 				body: payload,
-				keepalive: true
+				keepalive: true,
+				mode: 'cors'
 			}).catch(() => {});
+		} else if (typeof navigator !== 'undefined' && navigator.sendBeacon) {
+			navigator.sendBeacon(endpoint, payload);
 		}
 	} catch {
 		// Telemetry must never disrupt user flow.
