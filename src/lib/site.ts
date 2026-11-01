@@ -15,7 +15,8 @@ export const legal = [
 ] as const;
 
 export const links = {
-	github: '/github'
+	github: '/github',
+	changelog: '/changelog'
 } as const;
 
 /** Latest published client release (`v*` tag in hikkari-client). */
@@ -79,3 +80,15 @@ export const launchPricing = true;
 
 /** Checkout for a period; the hub's plan ids are the period ids (src/lib/billing.ts). */
 export const checkoutUrl = (period: string) => `/pay?plan=${encodeURIComponent(period)}`;
+
+/**
+ * Where /donate sends the money. `{amount}` is replaced with the roubles the
+ * visitor picked; null while no donation channel is connected (the page then
+ * shows the button disabled).
+ */
+export const donation = {
+	url: null as string | null,
+	amounts: [100, 300, 500, 1000],
+	min: 50,
+	max: 100_000
+};

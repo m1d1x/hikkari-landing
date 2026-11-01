@@ -4,7 +4,11 @@
 	import Header from '#lib/sections/Header.svelte';
 
 	/** Frame of the checkout pages: one narrow card under the site header. */
-	let { title, children }: { title: string; children: Snippet } = $props();
+	let {
+		title,
+		back = { href: '/#pricing', label: '← к тарифам' },
+		children
+	}: { title: string; back?: { href: string; label: string }; children: Snippet } = $props();
 </script>
 
 <svelte:head>
@@ -16,7 +20,7 @@
 
 <main class="pay-page" id="top">
 	<div class="container content">
-		<a class="back" href="/#pricing">← к тарифам</a>
+		<a class="back" href={back.href}>{back.label}</a>
 		<h1>{title}</h1>
 		<div class="card">
 			{@render children()}

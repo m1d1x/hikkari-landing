@@ -14,6 +14,7 @@
 			{#each legal as item (item.label)}
 				<a href={item.href}>{item.label}</a>
 			{/each}
+			<a href={links.changelog}>история версий</a>
 		</nav>
 		<a
 			class="gh"
