@@ -36,9 +36,9 @@
 		flex: 1 1 0;
 		min-width: 0;
 		border-radius: 10px;
-		font-family: var(--font-mono);
-		font-size: 12px;
-		font-weight: 500;
+		font-family: var(--font-sans);
+		font-size: 13.5px;
+		font-weight: 600;
 		line-height: 1;
 		color: var(--text-muted);
 		transition:
@@ -54,5 +54,6 @@
 	.pill.active {
 		background: var(--surface-2);
 		color: var(--text);
+		font-weight: 600;
 	}
 </style>

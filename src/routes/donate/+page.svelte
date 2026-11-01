@@ -12,9 +12,9 @@
 	];
 
 	const spend = [
-		'серверы и трафик для ноды, на которой живёт приложение',
-		'обновления движка и правки под новые блокировки',
-		'время на клиент: его делает один человек'
+		'серверы и трафик для работы приложения',
+		'обновления движка и поддержка протоколов',
+		'время на клиент: проект делает один человек'
 	];
 
 	let picked = $state(String(donation.amounts[1]));
@@ -30,12 +30,13 @@
 </script>
 
 <PayShell title="поддержать проект" back={{ href: '/', label: '← на главную' }}>
-	<div class="badge" aria-hidden="true"><Icon name="heart" size={26} /></div>
-
-	<p class="lead">
-		клиент бесплатный и таким останется. если hikkari вам полезен, можно закинуть на развитие,
-		без подписки и обязательств
-	</p>
+	<div class="intro">
+		<div class="badge" aria-hidden="true"><Icon name="heart" size={24} /></div>
+		<p class="lead">
+			клиент бесплатный и останется таким. если hikkari вам полезен, вы можете поддержать проект
+			без подписок и обязательств
+		</p>
+	</div>
 
 	<div class="amount-block">
 		<span class="label">сумма</span>
@@ -61,7 +62,10 @@
 		<span class="label">куда уходят деньги</span>
 		<ul>
 			{#each spend as item (item)}
-				<li><span class="mark"><Icon name="check" size={16} /></span>{item}</li>
+				<li>
+					<span class="mark"><Icon name="check" size={16} /></span>
+					<span class="item-text">{item}</span>
+				</li>
 			{/each}
 		</ul>
 	</div>
@@ -79,11 +83,18 @@
 </PayShell>
 
 <style>
+	.intro {
+		display: flex;
+		align-items: center;
+		gap: 16px;
+	}
+
 	.badge {
+		flex: none;
 		display: grid;
 		place-items: center;
-		width: 56px;
-		height: 56px;
+		width: 48px;
+		height: 48px;
 		color: var(--primary);
 		background: var(--selected-bg);
 		border: 1px solid var(--selected-border);
@@ -91,8 +102,10 @@
 	}
 
 	.lead {
-		color: var(--text-secondary);
-		line-height: 1.5;
+		color: var(--text);
+		font-size: 14.5px;
+		font-weight: 500;
+		line-height: 1.45;
 	}
 
 	.amount-block {
@@ -105,6 +118,7 @@
 		font-family: var(--font-mono);
 		font-size: 12px;
 		font-weight: 600;
+		letter-spacing: 0.02em;
 		color: var(--text-muted);
 	}
 
@@ -121,7 +135,9 @@
 		border: 1px solid var(--border-strong);
 		border-radius: var(--radius);
 		color: var(--text);
-		font-family: var(--font-mono);
+		font-family: var(--font-sans);
+		font-size: 15px;
+		font-weight: 500;
 		transition: border-color var(--transition-hover);
 		appearance: textfield;
 		-moz-appearance: textfield;
@@ -143,7 +159,9 @@
 		top: 50%;
 		right: 16px;
 		transform: translateY(-50%);
-		font-family: var(--font-mono);
+		font-family: var(--font-sans);
+		font-size: 15px;
+		font-weight: 600;
 		color: var(--text-muted);
 		pointer-events: none;
 	}
@@ -166,20 +184,46 @@
 
 	li {
 		display: flex;
+		align-items: center;
 		gap: 10px;
 		font-size: 14px;
-		line-height: 1.45;
-		color: var(--text-secondary);
+		font-weight: 500;
+		line-height: 1.4;
+		color: var(--text);
+		white-space: nowrap;
 	}
 
 	.mark {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
 		flex: none;
 		color: var(--primary);
-		margin-top: 1px;
+	}
+
+	.item-text {
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	@media (max-width: 520px) {
+		li {
+			font-size: 12.5px;
+			gap: 8px;
+		}
+	}
+
+	@media (max-width: 400px) {
+		li {
+			font-size: 11px;
+			gap: 6px;
+		}
 	}
 
 	.spend ~ :global(.btn) {
 		width: 100%;
+		font-size: 15px;
+		font-weight: 600;
 	}
 
 	.note {
@@ -187,6 +231,7 @@
 		text-align: center;
 		font-family: var(--font-mono);
 		font-size: 12px;
-		color: var(--text-faint);
+		font-weight: 500;
+		color: var(--text-muted);
 	}
 </style>

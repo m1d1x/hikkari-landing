@@ -55,6 +55,20 @@
 	--header-h: 72px;
 }
 
+/*
+ * IBM Plex Mono renders the Russian Ruble sign (U+20BD) with an awkward
+ * monospaced double-crossbar glyph. Fall back to IBM Plex Sans for U+20BD
+ * so every price and button renders the standard official currency sign.
+ */
+@font-face {
+	font-family: 'IBM Plex Mono';
+	font-style: normal;
+	font-weight: 100 900;
+	src: local('IBM Plex Sans'),
+	     url('@fontsource/ibm-plex-sans/files/ibm-plex-sans-cyrillic-600-normal.woff2') format('woff2');
+	unicode-range: U+20BD;
+}
+
 @media (max-width: 640px) {
 	:root {
 		--gutter: 16px;
