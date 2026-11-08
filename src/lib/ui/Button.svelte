@@ -3,8 +3,8 @@
 
 	/**
 	 * Landing call-to-action. `primary` is the filled accent button; `ghost`
-	 * uses a transparent background. Both animate a dashed contour and text fill
-	 * on hover / keyboard focus without shadows.
+	 * uses a transparent background and changes colour on hover / keyboard focus.
+	 * Only primary buttons animate a dashed contour and centre-out text fill.
 	 * Without `href` it renders disabled — used while a link doesn't exist.
 	 * With `type` it is a form button instead of a link.
 	 */
@@ -43,9 +43,11 @@
 </script>
 
 {#snippet content()}
-	<svg class="contour" aria-hidden="true" focusable="false">
-		<rect use:fitContour x="1" y="1" rx="13" />
-	</svg>
+	{#if variant === 'primary'}
+		<svg class="contour" aria-hidden="true" focusable="false">
+			<rect use:fitContour x="1" y="1" rx="13" />
+		</svg>
+	{/if}
 	<span class="label icon-text">{@render children()}</span>
 {/snippet}
 
@@ -111,6 +113,18 @@
 		transition: background-size 480ms var(--ease);
 	}
 
+	.ghost .label {
+		color: var(--label-color);
+		background: none;
+		transition: color var(--transition-hover);
+	}
+
+	.ghost:not(.disabled):focus-visible { --label-color: var(--primary); }
+
+	@media (hover: hover) and (pointer: fine) {
+		.ghost:not(.disabled):hover { --label-color: var(--primary); }
+	}
+
 	.label :global(svg) {
 		color: var(--label-color);
 		transition: color 300ms ease;
@@ -139,18 +153,18 @@
 
 	/* Hover is limited to mouse/trackpad so touch does not retain it. */
 	@media (hover: hover) and (pointer: fine) {
-		.btn:not(.disabled):hover { background: transparent; }
-		.btn:not(.disabled):hover .contour { opacity: 1; }
-		.btn:not(.disabled):hover .contour rect { animation-play-state: running; }
-		.btn:not(.disabled):hover .label { background-size: 100% 100%, 100% 100%; }
-		.btn:not(.disabled):hover .label :global(svg) { color: var(--primary); }
+		.primary:not(.disabled):hover { background: transparent; }
+		.primary:not(.disabled):hover .contour { opacity: 1; }
+		.primary:not(.disabled):hover .contour rect { animation-play-state: running; }
+		.primary:not(.disabled):hover .label { background-size: 100% 100%, 100% 100%; }
+		.primary:not(.disabled):hover .label :global(svg) { color: var(--primary); }
 	}
 
-	.btn:not(.disabled):focus-visible { background: transparent; }
-	.btn:not(.disabled):focus-visible .contour { opacity: 1; }
-	.btn:not(.disabled):focus-visible .contour rect { animation-play-state: running; }
-	.btn:not(.disabled):focus-visible .label { background-size: 100% 100%, 100% 100%; }
-	.btn:not(.disabled):focus-visible .label :global(svg) { color: var(--primary); }
+	.primary:not(.disabled):focus-visible { background: transparent; }
+	.primary:not(.disabled):focus-visible .contour { opacity: 1; }
+	.primary:not(.disabled):focus-visible .contour rect { animation-play-state: running; }
+	.primary:not(.disabled):focus-visible .label { background-size: 100% 100%, 100% 100%; }
+	.primary:not(.disabled):focus-visible .label :global(svg) { color: var(--primary); }
 
 	@keyframes contour-travel {
 		to { stroke-dashoffset: -28; }

@@ -1,10 +1,46 @@
 <script lang="ts">
 	import { reveal } from '#lib/actions/reveal.ts';
-	import { downloads, release } from '#lib/site.ts';
+	import { onMount } from 'svelte';
+	import { downloads, type PlatformId } from '#lib/site.ts';
 	import { trackDownload } from '#lib/telemetry.ts';
 	import BrandIcon from '#lib/ui/BrandIcon.svelte';
 	import Button from '#lib/ui/Button.svelte';
 	import Icon from '#lib/ui/Icon.svelte';
+
+	let versions = $state<Partial<Record<PlatformId, string>>>({});
+
+	onMount(() => {
+		let active: AbortController | undefined;
+		async function refresh() {
+			active?.abort();
+			const controller = new AbortController();
+			active = controller;
+			const timeout = setTimeout(() => controller.abort(), 10000);
+			try {
+				await Promise.all(downloads.map(async ({ id }) => {
+					try {
+						const response = await fetch(`https://update.hikkari.net/download/latest-${id}.json`, {
+							cache: 'no-store', signal: controller.signal
+						});
+						if (!response.ok) return;
+						const data = await response.json();
+						if (!controller.signal.aborted && typeof data.version === 'string' && /^\d+\.\d+\.\d+$/.test(data.version)) {
+							versions[id] = data.version;
+						}
+					} catch { /* Stable download URLs work even without release metadata. */ }
+				}));
+			} finally {
+				clearTimeout(timeout);
+			}
+		}
+		const onVisible = () => { if (document.visibilityState === 'visible') void refresh(); };
+		void refresh();
+		document.addEventListener('visibilitychange', onVisible);
+		return () => {
+			active?.abort();
+			document.removeEventListener('visibilitychange', onVisible);
+		};
+	});
 </script>
 
 <section class="section" id="download">
@@ -27,7 +63,7 @@
 
 					<div class="bottom">
 						<Button href={d.url} onclick={() => trackDownload(d.id, d.file)}>скачать {d.file} <Icon name="download" size={18} /></Button>
-						<p class="version">версия {release.version}</p>
+						<p class="version">{versions[d.id] ? `версия ${versions[d.id]}` : 'актуальная версия'}</p>
 					</div>
 				</article>
 			{/each}
