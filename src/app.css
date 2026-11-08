@@ -39,6 +39,9 @@
 	--font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 	--font-sans: 'IBM Plex Sans', system-ui, sans-serif;
 
+	/* Optical centre of lowercase Plex text sits below the line-box centre. */
+	--icon-text-offset: 0.1em;
+
 	/* motion — AppCurves / AppDurations */
 	--ease: cubic-bezier(0.16, 1, 0.3, 1);
 	--ease-hover: cubic-bezier(0.16, 1, 0.3, 1);
@@ -240,4 +243,12 @@ input {
 	.section {
 		padding-block: 80px;
 	}
+}
+
+/* Apply only to text/icon rows; standalone glyphs keep geometric centring.
+ * `translate` is independent of `transform`, so spinning icons still rotate
+ * around their own centre. em follows the row's font size.
+ */
+.icon-text [data-ui-icon] {
+	translate: 0 var(--icon-text-offset);
 }

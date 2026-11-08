@@ -88,8 +88,8 @@
 	<div class="head">
 		<span class="title">профили</span>
 		<span class="count">{count}</span>
-		<span class="add"><Icon name="add" size={16} /> добавить</span>
-		<span class="auto"><Icon name="bolt" size={14} /> auto</span>
+		<span class="add icon-text"><Icon name="add" size={16} /> добавить</span>
+		<span class="auto icon-text"><Icon name="bolt" size={14} /> auto</span>
 	</div>
 
 	<button class="drop dashed accent-hover" class:done={imported} onclick={importExample} disabled={imported}>
@@ -107,7 +107,7 @@
 		</span>
 	</button>
 
-	<label class="search">
+	<label class="search icon-text">
 		<Icon name="search" size={16} />
 		<input bind:value={query} placeholder="поиск" aria-label="поиск профиля" spellcheck="false" />
 	</label>

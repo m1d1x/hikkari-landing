@@ -28,7 +28,7 @@
 	let { name, size = 18 }: { name: keyof typeof brands; size?: number } = $props();
 </script>
 
-<svg width={size} height={size} viewBox={brands[name].box} fill="currentColor" fill-rule="evenodd" aria-hidden="true">
+<svg data-ui-icon width={size} height={size} viewBox={brands[name].box} fill="currentColor" fill-rule="evenodd" aria-hidden="true">
 	<path d={brands[name].path} />
 </svg>
 

@@ -197,7 +197,7 @@
 				{#each protocols as p, i (p.id)}
 					<li class="row {p.state}" bind:this={rows[i]}>
 						<span class="label">{p.label}</span>
-						<span class="state">
+						<span class="state icon-text">
 							{#if p.state === 'active' || p.state === 'joining'}
 								<i class="live"></i>{p.rtt} ms
 							{:else if p.state === 'interfered'}

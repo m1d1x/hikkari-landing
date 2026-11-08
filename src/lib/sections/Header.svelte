@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { nav } from '#lib/site.ts';
 	import Icon from '#lib/ui/Icon.svelte';
+	import Button from '#lib/ui/Button.svelte';
 	import Logo from '#lib/ui/Logo.svelte';
 
 	let scrolled = $state(false);
@@ -17,8 +18,8 @@
 			{/each}
 		</nav>
 		<div class="actions">
-			<a class="sub" href="/subscriptions">подписка</a>
-			<a class="cta" href="/#download">скачать <Icon name="download" size={16} /></a>
+			<Button href="/subscriptions" variant="ghost" size="compact">подписка</Button>
+			<Button href="/#download" size="compact">скачать <Icon name="download" size={16} /></Button>
 		</div>
 	</div>
 </header>
@@ -71,47 +72,6 @@
 		display: flex;
 		align-items: center;
 		gap: 8px;
-	}
-
-	.sub,
-	.cta {
-		display: inline-flex;
-		align-items: center;
-		gap: 8px;
-		height: 40px;
-		padding: 0 16px;
-		border-radius: var(--radius);
-		font-family: var(--font-mono);
-		font-size: 13px;
-		font-weight: 600;
-	}
-
-	.sub {
-		color: var(--text);
-		border: 1px solid transparent;
-		transition:
-			background var(--transition-hover),
-			border-color var(--transition-hover),
-			color var(--transition-hover);
-	}
-
-	.sub:hover {
-		color: var(--primary);
-		background: var(--surface-2);
-		border-color: rgb(var(--primary-rgb) / 0.55);
-	}
-
-	.cta {
-		background: var(--primary);
-		color: var(--on-primary);
-		transition:
-			background var(--transition-hover),
-			box-shadow var(--transition-hover);
-	}
-
-	.cta:hover {
-		background: #ff94c6;
-		box-shadow: 0 8px 28px -8px rgb(var(--primary-rgb) / 0.55);
 	}
 
 	@media (max-width: 860px) {

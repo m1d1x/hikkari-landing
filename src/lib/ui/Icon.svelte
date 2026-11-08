@@ -5,7 +5,7 @@
 		$props();
 </script>
 
-<svg
+<svg data-ui-icon
 	class={className}
 	width={size}
 	height={size}

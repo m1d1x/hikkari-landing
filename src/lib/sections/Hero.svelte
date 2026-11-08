@@ -21,8 +21,8 @@
 				<Button href="/#pricing" variant="ghost">подписка hikkari <Icon name="arrowForward" size={16} /></Button>
 			</div>
 			<ul class="platforms" aria-label="платформы">
-				<li><a href="/#download"><BrandIcon name="apple" size={16} /> macos</a></li>
-				<li><a href="/#download"><BrandIcon name="windows" size={15} /> windows</a></li>
+				<li><a class="icon-text" href="/#download"><BrandIcon name="apple" size={16} /> macos</a></li>
+				<li><a class="icon-text" href="/#download"><BrandIcon name="windows" size={15} /> windows</a></li>
 			</ul>
 		</div>
 

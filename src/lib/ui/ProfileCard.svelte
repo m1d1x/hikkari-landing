@@ -36,7 +36,7 @@
 	<span class="rtt">
 		{#if rtt === null}…{:else}{rtt}<span class="unit">&nbsp;ms</span>{/if}
 	</span>
-	<span class="chevron"><Icon name="chevronDown" size={19} /></span>
+	<span class="chevron icon-text"><Icon name="chevronDown" size={19} /></span>
 </button>
 
 <style>

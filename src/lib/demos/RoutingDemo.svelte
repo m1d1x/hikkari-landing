@@ -162,7 +162,7 @@
 			onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), (open = !open))}
 		>
 			<span class="title">маршрутизация</span>
-			<span class="chev" class:up={open}><Icon name="chevronDown" size={16} /></span>
+			<span class="chev icon-text" class:up={open}><Icon name="chevronDown" size={16} /></span>
 			<span class="status">
 				{#key apply}
 					{#if status[apply]}
@@ -180,7 +180,7 @@
 					<Segmented segments={tabs} bind:selected={tab} label="категория правил" />
 					{#key tab}
 						{#if tab === 'processes'}
-							<button class="add-app" onclick={addApp} disabled={!nextApp}>
+							<button class="add-app icon-text" onclick={addApp} disabled={!nextApp}>
 								<Icon name="add" size={18} />
 								{nextApp ? 'добавить приложение' : 'все демо-приложения добавлены'}
 							</button>

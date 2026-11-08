@@ -4,11 +4,11 @@
 	import PayShell from '#lib/sections/PayShell.svelte';
 	import Button from '#lib/ui/Button.svelte';
 	import Icon from '#lib/ui/Icon.svelte';
+	import CopyLink from '#lib/ui/CopyLink.svelte';
 
 	let order = $state<Order | null>(null);
 	/** No order this browser can prove (lost link, other browser). */
 	let lost = $state(false);
-	let copied = $state(false);
 	let timer: ReturnType<typeof setTimeout> | undefined;
 
 	onMount(() => {
@@ -46,13 +46,6 @@
 
 	onDestroy(() => clearTimeout(timer));
 
-	async function copy() {
-		if (!order?.url) return;
-		await navigator.clipboard.writeText(order.url);
-		copied = true;
-		setTimeout(() => (copied = false), 2_000);
-	}
-
 	const title = $derived(
 		order?.status === 'paid'
 			? order.renewal
@@ -82,12 +75,7 @@
 			<p class="lead">
 				это ваша ссылка подписки. откройте её в hikkari одной кнопкой или вставьте вручную: «профили → добавить»
 			</p>
-			<div class="link">
-				<code>{order.url}</code>
-				<button class="copy" type="button" onclick={copy} aria-label="скопировать ссылку">
-					<Icon name={copied ? 'check' : 'copy'} size={18} />
-				</button>
-			</div>
+			<CopyLink value={order.url} />
 			<p class="note">ссылка и есть доступ: не публикуйте её. копия уже отправлена на email</p>
 			<div class="actions">
 				<Button href={importLink(order.url)}>открыть в hikkari <Icon name="arrowForward" size={18} /></Button>
@@ -110,44 +98,6 @@
 		color: var(--text-muted);
 	}
 
-	.link {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		padding: 8px 8px 8px 16px;
-		background: var(--bg);
-		border: 1px solid var(--selected-border);
-		border-radius: var(--radius);
-	}
-
-	code {
-		flex: 1;
-		min-width: 0;
-		overflow-wrap: anywhere;
-		font-family: var(--font-mono);
-		font-size: 13px;
-		color: var(--text);
-	}
-
-	.copy {
-		display: grid;
-		place-items: center;
-		flex: none;
-		width: 40px;
-		height: 40px;
-		border-radius: 10px;
-		color: var(--text-muted);
-		cursor: pointer;
-		transition:
-			color var(--transition-hover),
-			background var(--transition-hover);
-	}
-
-	.copy:hover {
-		color: var(--primary);
-		background: var(--surface-2);
-	}
-
 	.note {
 		font-size: 13px;
 		color: var(--text-muted);
@@ -156,6 +106,7 @@
 	.actions {
 		display: flex;
 		flex-wrap: wrap;
+		justify-content: center;
 		gap: 12px;
 	}
 </style>

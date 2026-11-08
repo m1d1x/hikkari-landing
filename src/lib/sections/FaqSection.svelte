@@ -42,7 +42,7 @@
 				<details>
 					<summary>
 						<span>{item.q}</span>
-						<span class="chev"><Icon name="chevronDown" size={18} /></span>
+						<span class="chev icon-text"><Icon name="chevronDown" size={18} /></span>
 					</summary>
 					<p>{item.a}</p>
 				</details>

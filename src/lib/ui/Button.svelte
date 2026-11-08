@@ -3,7 +3,8 @@
 
 	/**
 	 * Landing call-to-action. `primary` is the filled accent button; `ghost`
-	 * mirrors the app's outlined action (hairline border, accent on hover).
+	 * uses a transparent background. Both animate a dashed contour and text fill
+	 * on hover / keyboard focus without shadows.
 	 * Without `href` it renders disabled — used while a link doesn't exist.
 	 * With `type` it is a form button instead of a link.
 	 */
@@ -13,6 +14,7 @@
 		disabled = false,
 		onclick,
 		variant = 'primary',
+		size = 'regular',
 		external = false,
 		children
 	}: {
@@ -21,80 +23,148 @@
 		disabled?: boolean;
 		onclick?: () => void;
 		variant?: 'primary' | 'ghost';
+		size?: 'regular' | 'compact';
 		external?: boolean;
 		children: Snippet;
 	} = $props();
+
+	// Fit a whole number of dash/gap pairs to the closed path. This keeps
+	// the first and last dash continuous at every button width and phase.
+	function fitContour(node: SVGRectElement) {
+		const update = () => {
+			const pairs = Math.max(1, Math.round(node.getTotalLength() / 14));
+			node.setAttribute('pathLength', String(pairs * 14));
+		};
+		const observer = new ResizeObserver(update);
+		observer.observe(node);
+		update();
+		return { destroy: () => observer.disconnect() };
+	}
 </script>
 
+{#snippet content()}
+	<svg class="contour" aria-hidden="true" focusable="false">
+		<rect use:fitContour x="1" y="1" rx="13" />
+	</svg>
+	<span class="label icon-text">{@render children()}</span>
+{/snippet}
+
 {#if type}
-	<button class="btn {variant}" class:disabled {type} {disabled} {onclick}>{@render children()}</button>
+	<button class="btn {variant} {size}" class:disabled {type} {disabled} {onclick}>{@render content()}</button>
 {:else if href}
 	<a
-		class="btn {variant}"
+		class="btn {variant} {size}"
 		{href}
 		{onclick}
 		target={external ? '_blank' : undefined}
 		rel={external ? 'noopener noreferrer' : undefined}
 	>
-		{@render children()}
+		{@render content()}
 	</a>
 {:else}
-	<span class="btn {variant} disabled" aria-disabled="true">{@render children()}</span>
+	<span class="btn {variant} disabled" aria-disabled="true">{@render content()}</span>
 {/if}
 
 <style>
 	.btn {
+		--label-color: var(--on-primary);
+		position: relative;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		gap: 10px;
 		height: 48px;
 		padding: 0 22px;
+		border: 0;
 		border-radius: var(--radius);
 		font-family: var(--font-mono);
 		font-size: 14px;
 		font-weight: 600;
 		line-height: 1;
 		white-space: nowrap;
-		transition:
-			background var(--transition-hover),
-			border-color var(--transition-hover),
-			color var(--transition-hover),
-			box-shadow var(--transition-hover);
+		color: var(--label-color);
+		transition: background var(--transition-hover);
 	}
 
-	.primary {
-		background: var(--primary);
-		color: var(--on-primary);
-		box-shadow: 0 0 0 0 rgb(var(--primary-rgb) / 0);
-	}
+	.compact { height: 40px; padding: 0 16px; font-size: 13px; }
+	.compact .label { gap: 8px; }
 
-	.primary:hover {
-		background: #ff94c6;
-		box-shadow: 0 8px 32px -8px rgb(var(--primary-rgb) / 0.55);
-	}
-
+	.primary { background: var(--primary); }
 	.ghost {
-		color: var(--text);
-		border: 1px solid transparent;
+		--label-color: var(--text);
+		background: transparent;
 	}
 
-	.ghost:hover {
-		color: var(--primary);
-		background: var(--surface-2);
-		border-color: rgb(var(--primary-rgb) / 0.55);
+	.label {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		color: transparent;
+		background-image:
+			linear-gradient(var(--primary), var(--primary)),
+			linear-gradient(var(--label-color), var(--label-color));
+		background-size: 0% 100%, 100% 100%;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-clip: text;
+		-webkit-background-clip: text;
+		transition: background-size 480ms var(--ease);
 	}
 
-	button {
-		cursor: pointer;
+	.label :global(svg) {
+		color: var(--label-color);
+		transition: color 300ms ease;
 	}
 
-	.disabled,
-	.disabled:hover {
+	.contour {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		overflow: visible;
+		pointer-events: none;
+		fill: none;
+		stroke: var(--primary);
+		stroke-width: 2;
+		stroke-dasharray: 8 6;
+		opacity: 0;
+		transition: opacity var(--transition-hover);
+	}
+
+	.contour rect {
+		width: calc(100% - 2px);
+		height: calc(100% - 2px);
+		animation: contour-travel 800ms linear infinite paused;
+	}
+
+	/* Hover is limited to mouse/trackpad so touch does not retain it. */
+	@media (hover: hover) and (pointer: fine) {
+		.btn:not(.disabled):hover { background: transparent; }
+		.btn:not(.disabled):hover .contour { opacity: 1; }
+		.btn:not(.disabled):hover .contour rect { animation-play-state: running; }
+		.btn:not(.disabled):hover .label { background-size: 100% 100%, 100% 100%; }
+		.btn:not(.disabled):hover .label :global(svg) { color: var(--primary); }
+	}
+
+	.btn:not(.disabled):focus-visible { background: transparent; }
+	.btn:not(.disabled):focus-visible .contour { opacity: 1; }
+	.btn:not(.disabled):focus-visible .contour rect { animation-play-state: running; }
+	.btn:not(.disabled):focus-visible .label { background-size: 100% 100%, 100% 100%; }
+	.btn:not(.disabled):focus-visible .label :global(svg) { color: var(--primary); }
+
+	@keyframes contour-travel {
+		to { stroke-dashoffset: -28; }
+	}
+
+	.disabled {
+		--label-color: var(--text-faint);
 		cursor: default;
 		background: var(--surface-2);
-		color: var(--text-faint);
 		border: 1px solid var(--border);
-		box-shadow: none;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.btn, .label, .contour, .label :global(svg) { transition: none; }
+		.contour rect { animation: none; }
 	}
 </style>

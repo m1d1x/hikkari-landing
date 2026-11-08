@@ -31,7 +31,7 @@
 				<Sparkline {samples} color="var(--primary)" height={17} />
 			</span>
 			<span class="rtt">{rtt} ms</span>
-			<span class="chev"><Icon name="chevronDown" size={18} /></span>
+			<span class="chev icon-text"><Icon name="chevronDown" size={18} /></span>
 		</span>
 		<span class="endpoint">
 			<Flag code="jp" width={16} height={12} />
@@ -41,7 +41,7 @@
 
 	<a class="route" href="/#routing" aria-label="маршрутизация">
 		<span class="route-title">маршрутизация</span>
-		<span class="route-chev"><Icon name="chevronDown" size={16} /></span>
+		<span class="route-chev icon-text"><Icon name="chevronDown" size={16} /></span>
 		<span class="route-gap"></span>
 		<span class="route-more"><Icon name="more" size={20} /></span>
 		<Switch checked display label="маршрутизация" />

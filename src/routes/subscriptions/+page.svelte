@@ -143,12 +143,12 @@
 					</div>
 
 					<ul class="features">
-						<li><Icon name="check" size={16} /> Готовые серверы 1–10 Гбит/с в Европе</li>
-						<li><Icon name="check" size={16} /> Движок авто-смены протоколов (VLESS / XHTTP / Hysteria2)</li>
-						<li><Icon name="check" size={16} /> Российские сайты и сервисы напрямую мимо VPN</li>
-						<li><Icon name="check" size={16} /> YouTube 4K, Discord голосовые и чаты без задержек</li>
-						<li><Icon name="check" size={16} /> Мгновенный импорт в приложение по ссылке или QR-коду</li>
-						<li><Icon name="check" size={16} /> Подключение всех ваших домашних устройств</li>
+						<li class="icon-text"><Icon name="check" size={16} /> Готовые серверы от 1 до 10 Гбит/с в Европе</li>
+						<li class="icon-text"><Icon name="check" size={16} /> Движок авто-смены протоколов (VLESS / XHTTP / Hysteria2)</li>
+						<li class="icon-text"><Icon name="check" size={16} /> Российские сайты и сервисы напрямую мимо VPN</li>
+						<li class="icon-text"><Icon name="check" size={16} /> YouTube 4K, Discord голосовые и чаты без задержек</li>
+						<li class="icon-text"><Icon name="check" size={16} /> Мгновенный импорт в приложение по ссылке или QR-коду</li>
+						<li class="icon-text"><Icon name="check" size={16} /> Подключение всех ваших домашних устройств</li>
 					</ul>
 
 					<div class="cta-box">

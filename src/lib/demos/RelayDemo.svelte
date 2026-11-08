@@ -72,7 +72,7 @@
 <div class="relay" use:interval={{ ms: 1800, tick: step }}>
 	<div class="top">
 		<span class="title">серверы</span>
-		<span class="auto"><Icon name="bolt" size={14} /> auto</span>
+		<span class="auto icon-text"><Icon name="bolt" size={14} /> auto</span>
 	</div>
 
 	<div class="grid head" aria-hidden="true">

@@ -89,7 +89,7 @@
 
 				<ul class="list">
 					{#each features as f (f.name)}
-						<li><span class="mark"><Icon name="check" size={18} /></span>{f.name}</li>
+						<li class="icon-text"><span class="mark"><Icon name="check" size={18} /></span>{f.name}</li>
 					{/each}
 				</ul>
 
@@ -113,7 +113,7 @@
 
 				<ul class="list">
 					{#each features as f (f.name)}
-						<li class:off={!f.other}>
+						<li class="icon-text" class:off={!f.other}>
 							<span class="mark">
 								{#if f.other}<Icon name="check" size={18} />{:else}-{/if}
 							</span>{f.name}

@@ -62,7 +62,7 @@
 		<span class="label">куда уходят деньги</span>
 		<ul>
 			{#each spend as item (item)}
-				<li>
+				<li class="icon-text">
 					<span class="mark"><Icon name="check" size={16} /></span>
 					<span class="item-text">{item}</span>
 				</li>
