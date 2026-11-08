@@ -21,7 +21,7 @@ export const links = {
 
 /** Latest published client release (`v*` tag in hikkari-client). */
 export const release = {
-	version: '1.0.9'
+	version: '1.0.61'
 } as const;
 
 export type PlatformId = 'macos' | 'windows';
