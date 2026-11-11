@@ -10,7 +10,7 @@
 		<div>
 			<SectionHead index="03" eyebrow="автовыбор сервера">
 				{#snippet title()}всегда самый быстрый{/snippet}
-				{#snippet lead()}не нужно перебирать серверы вручную, когда вечером падает скорость - клиент сам следит за локациями и держит самую быструю{/snippet}
+				{#snippet lead()}не нужно перебирать серверы вручную, когда вечером падает скорость: клиент сам следит за локациями и держит самую быструю{/snippet}
 			</SectionHead>
 			<div class="points" data-reveal use:reveal={80}>
 				<FeaturePoint icon="speed" title="замер пинга и пропускной способности" />

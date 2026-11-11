@@ -19,7 +19,7 @@
 </script>
 
 <svelte:head>
-	<title>{title} - hikkari</title>
+	<title>{title} · hikkari</title>
 </svelte:head>
 
 <Header />

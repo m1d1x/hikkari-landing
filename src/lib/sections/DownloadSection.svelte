@@ -47,7 +47,7 @@
 	<div class="container">
 		<div class="intro" data-reveal use:reveal>
 			<h2>скачать hikkari</h2>
-			<p>клиент бесплатный. подписка нужна только для премиум серверов hikkari, свои подключайте как есть.</p>
+			<p>клиент бесплатный. подписка нужна только для серверов hikkari, свои подключайте как есть</p>
 		</div>
 
 		<div class="cards">

@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-	<title>github - hikkari</title>
+	<title>github · hikkari</title>
 	<meta name="robots" content="noindex" />
 </svelte:head>
 

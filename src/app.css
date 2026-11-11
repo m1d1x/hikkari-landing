@@ -215,8 +215,25 @@ input {
 	background-repeat: no-repeat;
 }
 
-.dashed.accent-hover:hover {
+.dashed.accent-hover {
+	position: relative;
+}
+
+/* background-image can't transition, so the accent frame is an overlay that fades in. */
+.dashed.accent-hover::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
 	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' rx='18' fill='none' stroke='rgba(255,126,185,0.6)' stroke-width='4' stroke-dasharray='8 6'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity var(--transition-hover);
+}
+
+.dashed.accent-hover:hover::after {
+	opacity: 1;
 }
 
 .section-grid {

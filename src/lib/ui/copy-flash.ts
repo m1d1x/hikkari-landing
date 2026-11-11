@@ -7,16 +7,19 @@ const segment = (v: number, start: number, end: number) => clamp((v - start) / (
 
 function cubic(x1: number, y1: number, x2: number, y2: number) {
 	const evaluate = (t: number, a: number, b: number) => 3 * a * (1 - t) ** 2 * t + 3 * b * (1 - t) * t ** 2 + t ** 3;
-	return (v: number) => {
+	return (input: number) => {
+		// An input outside 0..1 never converges: the bisection below would spin forever and hang the tab.
+		const v = clamp(input);
 		if (v === 0 || v === 1) return v;
-		let lo = 0, hi = 1;
-		for (;;) {
-			const mid = (lo + hi) / 2;
+		let lo = 0, hi = 1, mid = .5;
+		for (let i = 0; i < 40; i++) {
+			mid = (lo + hi) / 2;
 			const estimate = evaluate(mid, x1, x2);
 			// Same error bound as Flutter's Cubic._cubicErrorBound.
-			if (Math.abs(v - estimate) < .001) return evaluate(mid, y1, y2);
+			if (Math.abs(v - estimate) < .001) break;
 			if (estimate < v) lo = mid; else hi = mid;
 		}
+		return evaluate(mid, y1, y2);
 	};
 }
 

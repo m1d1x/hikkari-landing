@@ -13,16 +13,16 @@
 		<div class="copy">
 			<h1>vpn, о котором<br />забываешь</h1>
 			<p class="lead">
-				если протокол или сервер перестал работать, hikkari бесшовно переключит на рабочий. выключать
-				его не придётся: благодаря гибкой маршрутизации игры и российские сайты работают напрямую
+				перестал работать протокол или сервер: hikkari сам переключится на рабочий. выключать его
+				не придётся, российские сайты и игры идут напрямую
 			</p>
 			<div class="actions">
 				<Button href="/#download">скачать <Icon name="download" size={18} /></Button>
 				<Button href="/#pricing" variant="ghost">подписка hikkari <Icon name="arrowForward" size={16} /></Button>
 			</div>
 			<ul class="platforms" aria-label="платформы">
-				<li><a class="icon-text" href="/#download"><BrandIcon name="apple" size={16} /> macos</a></li>
-				<li><a class="icon-text" href="/#download"><BrandIcon name="windows" size={15} /> windows</a></li>
+				<li><Button href="/#download" variant="ghost" size="compact"><BrandIcon name="apple" size={14} /> macos</Button></li>
+				<li><Button href="/#download" variant="ghost" size="compact"><BrandIcon name="windows" size={16} /> windows</Button></li>
 			</ul>
 		</div>
 
@@ -138,24 +138,10 @@
 	.platforms {
 		display: flex;
 		justify-content: center;
-		gap: 28px;
-		margin: 48px 0 0;
+		gap: 8px;
+		margin: 40px 0 0;
 		padding: 0;
 		list-style: none;
-	}
-
-	.platforms a {
-		display: inline-flex;
-		align-items: center;
-		gap: 10px;
-		font-family: var(--font-mono);
-		font-size: 13px;
-		color: var(--text-muted);
-		transition: color var(--transition-hover);
-	}
-
-	.platforms a:hover {
-		color: var(--primary);
 	}
 
 	.device {

@@ -10,10 +10,10 @@
 		<div>
 			<SectionHead index="01" eyebrow="движок протоколов">
 				{#snippet title()}чинит себя сам{/snippet}
-				{#snippet lead()}протокол перестал работать? hikkari бесшовно переключит соединение на рабочий{/snippet}
+				{#snippet lead()}на серверах hikkari наготове несколько протоколов. перестал работать один, соединение уже идёт по другому{/snippet}
 			</SectionHead>
 			<div class="points" data-reveal use:reveal={80}>
-				<FeaturePoint icon="swap" title="бесшовное переключение" />
+				<FeaturePoint icon="swap" title="переключение без обрыва" />
 				<FeaturePoint icon="layers" title="поддержка всех протоколов" />
 				<FeaturePoint icon="eye" title="раннее обнаружение сбоев" />
 			</div>

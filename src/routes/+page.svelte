@@ -12,17 +12,21 @@
 </script>
 
 <svelte:head>
-	<title>hikkari - vpn, о котором забываешь</title>
+	<title>hikkari · vpn, о котором забываешь</title>
 	<meta
 		name="description"
-		content="vpn-клиент для macos и windows: если протокол или сервер перестал работать, hikkari бесшовно переключит на рабочий. гибкая маршрутизация: российские сайты работают с включённым vpn, в играх нет лишнего пинга."
+		content="vpn-клиент для macos и windows: сам переходит на рабочий протокол и сервер, российские сайты и игры пускает напрямую. бесплатный, принимает любые подписки"
 	/>
-	<meta property="og:title" content="hikkari - vpn, о котором забываешь" />
+	<link rel="canonical" href="https://hikkari.net/" />
+	<meta property="og:title" content="hikkari · vpn, о котором забываешь" />
 	<meta
 		property="og:description"
-		content="движок протоколов, полная маршрутизация, автовыбор сервера и любые подписки в одном клиенте."
+		content="сам переходит на рабочий протокол и сервер, российские сайты и игры пускает напрямую. бесплатный клиент для macos и windows"
 	/>
 	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://hikkari.net/" />
+	<meta property="og:site_name" content="hikkari" />
+	<meta property="og:locale" content="ru_RU" />
 </svelte:head>
 
 <Header />

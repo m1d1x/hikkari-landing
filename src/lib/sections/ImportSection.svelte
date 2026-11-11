@@ -12,7 +12,7 @@
 			<div>
 				<SectionHead index="04" eyebrow="импорт">
 					{#snippet title()}один клиент для&nbsp;всего{/snippet}
-					{#snippet lead()}неважно, чья у вас подписка - <a href="#pricing">наша</a>, чужая или свой сервер. всё работает в одном клиенте{/snippet}
+					{#snippet lead()}неважно, чья у вас подписка: <a href="#pricing">наша</a>, чужая или свой сервер. всё работает в одном клиенте{/snippet}
 				</SectionHead>
 				<div class="points" data-reveal use:reveal={80}>
 					<FeaturePoint icon="link" title="поддержка любого формата" />

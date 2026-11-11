@@ -73,6 +73,6 @@
 	}
 
 	path {
-		transition: stroke 200ms;
+		transition: stroke var(--transition-hover);
 	}
 </style>

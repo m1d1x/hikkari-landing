@@ -17,7 +17,10 @@
 		'M54.9 52 43.8 24h-8.5l-11 28L13.2 24H0l19.4 49.4h8.5L39.6 44l11.7 29.4h8.5L79.1 24H66zM110.8 22.1c-5.7 0-10.8 1.7-15.1 4.5V.5H83.6v48.1c0 14.6 12.2 26.4 27.1 26.4 14.9 0 27.3-11.7 27.3-26.5S126 22.1 110.8 22.1zM110.8 63.3c-8.2 0-15.1-6.4-15.1-14.7S102.2 34 110.8 34 126 40.5 126 48.6s-6.9 14.7-15.2 14.7z';
 
 	const brands = {
-		apple: { path: siApple.path, box: '0 0 24 24' },
+		// `nudge` is an optical shift in em. The leaf takes the top quarter of the box, so
+		// centring the whole box lifts the apple's body above the lowercase letters. The
+		// shift puts the body (y 5.9–24) on the x-height centre, where the windows panes sit.
+		apple: { path: siApple.path, box: '0 0 24 24', nudge: -0.12 },
 		github: { path: siGithub.path, box: '0 0 24 24' },
 		windows: { path: windows, box: '0 0 24 24' },
 		sber: { path: sber, box: '0 0 46.6 47.7' },
@@ -26,9 +29,10 @@
 	} as const;
 
 	let { name, size = 18 }: { name: keyof typeof brands; size?: number } = $props();
+	const nudge = $derived((brands[name] as { nudge?: number }).nudge ?? 0);
 </script>
 
-<svg data-ui-icon width={size} height={size} viewBox={brands[name].box} fill="currentColor" fill-rule="evenodd" aria-hidden="true">
+<svg data-ui-icon style:position={nudge ? 'relative' : undefined} style:top={nudge ? `${nudge * size}px` : undefined} width={size} height={size} viewBox={brands[name].box} fill="currentColor" fill-rule="evenodd" aria-hidden="true">
 	<path d={brands[name].path} />
 </svg>
 

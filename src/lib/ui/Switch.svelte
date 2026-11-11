@@ -42,7 +42,7 @@
 		padding: 2px;
 		border-radius: 999px;
 		background: var(--surface-2);
-		transition: background 250ms ease-out;
+		transition: background var(--transition-hover);
 	}
 
 	.switch.on {
@@ -56,8 +56,8 @@
 		border-radius: 50%;
 		background: #ddd;
 		transition:
-			transform 250ms ease-out,
-			background 250ms ease-out;
+			transform var(--d-normal) var(--ease),
+			background var(--transition-hover);
 	}
 
 	.on .knob {

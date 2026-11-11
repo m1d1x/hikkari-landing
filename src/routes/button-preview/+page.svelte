@@ -3,7 +3,7 @@
 	import Icon from '#lib/ui/Icon.svelte';
 </script>
 
-<svelte:head><title>Кнопки | hikkari</title><meta name="robots" content="noindex" /></svelte:head>
+<svelte:head><title>кнопки · hikkari</title><meta name="robots" content="noindex" /></svelte:head>
 
 <main class="container">
 	<p class="eyebrow">hikkari / компонент кнопки</p>

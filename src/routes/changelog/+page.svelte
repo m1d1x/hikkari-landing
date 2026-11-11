@@ -20,8 +20,9 @@
 </script>
 
 <svelte:head>
-	<title>история версий - hikkari</title>
-	<meta name="description" content="История версий и изменений клиента hikkari" />
+	<title>история версий · hikkari</title>
+	<meta name="description" content="что менялось в клиенте hikkari от версии к версии" />
+	<link rel="canonical" href="https://hikkari.net/changelog" />
 </svelte:head>
 
 <Header />
@@ -33,7 +34,7 @@
 		<div class="header">
 			<h1>история версий</h1>
 			<p class="lead">
-				хронология обновлений клиента hikkari: новые функции, улучшения сетевого стека и исправления.
+				что менялось в клиенте hikkari. версии, которые ничего не меняли для вас, пропущены
 			</p>
 		</div>
 

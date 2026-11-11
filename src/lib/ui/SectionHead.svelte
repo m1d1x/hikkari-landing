@@ -8,14 +8,16 @@
 		eyebrow,
 		title,
 		lead
-	}: { index?: string; eyebrow: string; title: Snippet; lead?: Snippet } = $props();
+	}: { index?: string; eyebrow?: string; title: Snippet; lead?: Snippet } = $props();
 </script>
 
 <header class="head" data-reveal use:reveal>
-	<p class="eyebrow">
-		{#if index}<span class="index">{index}</span><span class="rule"></span>{/if}
-		{eyebrow}
-	</p>
+	{#if index || eyebrow}
+		<p class="eyebrow">
+			{#if index}<span class="index">{index}</span><span class="rule"></span>{/if}
+			{eyebrow}
+		</p>
+	{/if}
 	<h2>{@render title()}</h2>
 	{#if lead}<p class="lead">{@render lead()}</p>{/if}
 </header>

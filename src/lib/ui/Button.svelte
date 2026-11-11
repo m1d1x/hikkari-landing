@@ -127,7 +127,7 @@
 
 	.label :global(svg) {
 		color: var(--label-color);
-		transition: color 300ms ease;
+		transition: color var(--transition-hover);
 	}
 
 	.contour {

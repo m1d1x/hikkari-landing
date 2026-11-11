@@ -26,7 +26,8 @@
 		const started = performance.now();
 		const duration = reverse ? 190 : 225;
 		const tick = (now: number) => {
-			const progress = Math.min(1, (now - started) / duration);
+			// The frame timestamp can precede `started`, so keep progress inside 0..1.
+			const progress = Math.max(0, Math.min(1, (now - started) / duration));
 			v = reverse ? 1 - progress : progress;
 			if (progress < 1) raf = requestAnimationFrame(tick);
 			else if (reverse) copied = false;
@@ -83,12 +84,13 @@
 
 <style>
 	button { position: relative; width: 100%; text-align: left; }
-	.surface { position: relative; display: block; padding: 10px 12px; min-height: 48px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg); transition: background 220ms var(--ease); }
+	.surface { position: relative; display: block; padding: 10px 12px; min-height: 48px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg); transition: background var(--transition-hover); }
 	.dark .surface { background: color-mix(in srgb, var(--bg) 40%, black); }
 	.body { display: flex; align-items: center; gap: 6px; min-height: 26px; opacity: 1; transition: opacity 220ms var(--ease); }
 	.dark .body { opacity: .08; }
-	.body :global(svg) { flex: none; color: var(--text-muted); }
-	.link { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 700 13px/1.5 var(--font-mono); color: var(--text); }
+	/* The icon sits alone beside the link, so it keeps geometric centring instead of the text-row offset. */
+	.body :global(svg) { flex: none; color: var(--text-muted); translate: none; }
+	.link { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 700 13px/1.5 var(--font-mono); color: var(--primary); }
 	.hint { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; gap: 6px; opacity: 0; pointer-events: none; color: var(--primary); font: 600 14px/1 var(--font-mono); transition: opacity 220ms var(--ease); }
 	.hint.visible { opacity: 1; }
 	.flashing .hint { transition-duration: 140ms; }
