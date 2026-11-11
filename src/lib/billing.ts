@@ -8,8 +8,13 @@
  * URL's fragment, which no server along the way logs.
  */
 
-/** The hub's public API; VITE_API_URL points the dev server at a local hub. */
-export const apiUrl: string = import.meta.env.VITE_API_URL ?? 'https://api.hikkari.net';
+/**
+ * The hub's public API; VITE_API_URL points the dev server at a local hub.
+ * Without it the dev server proxies /v1 to the real hub (vite.config.ts),
+ * since the hub's CORS lets only https://hikkari.net in.
+ */
+export const apiUrl: string =
+	import.meta.env.VITE_API_URL ?? (import.meta.env.DEV ? '' : 'https://api.hikkari.net');
 
 export interface Plan {
 	id: string;

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { reveal } from '#lib/actions/reveal.ts';
-	import { checkoutUrl, launchPricing, periods as defaultPeriods } from '#lib/site.ts';
+	import { checkoutUrl, periods as defaultPeriods } from '#lib/site.ts';
 	import { getPeriodsState } from '#lib/periods.svelte.ts';
 	import Button from '#lib/ui/Button.svelte';
 	import Icon from '#lib/ui/Icon.svelte';
@@ -9,13 +9,13 @@
 	import Segmented from '#lib/ui/Segmented.svelte';
 
 	// What each source gets. The protocol engine needs servers that run the
-	// whole protocol set, which only the hikkari fleet does.
+	// whole protocol set, which only the hikkari fleet does. Each item jumps
+	// to the section that tells about it.
 	const features = [
-		{ name: 'серверы hikkari', ours: true, other: false },
-		{ name: 'движок протоколов', ours: true, other: false },
-		{ name: 'маршрутизация и готовые группы', ours: true, other: true },
-		{ name: 'автовыбор сервера по пингу и скорости', ours: true, other: true },
-		{ name: 'срок, трафик и автообновление подписки', ours: true, other: true }
+		{ name: 'серверы hikkari', href: '#relay', ours: true, other: false },
+		{ name: 'движок протоколов', href: '#engine', ours: true, other: false },
+		{ name: 'маршрутизация и готовые группы', href: '#routing', ours: true, other: true },
+		{ name: 'автовыбор сервера по пингу и скорости', href: '#relay', ours: true, other: true }
 	];
 
 	const periodsState = getPeriodsState();
@@ -24,11 +24,6 @@
 	const periods = $derived(periodsState.list);
 	const period = $derived(
 		periods.find((p) => p.id === periodId) ??
-		periods.find((p) => p.months === 1) ??
-		periods[0] ??
-		defaultPeriods[0]
-	);
-	const base = $derived(
 		periods.find((p) => p.months === 1) ??
 		periods[0] ??
 		defaultPeriods[0]
@@ -52,8 +47,7 @@
 	<div class="container">
 		<div class="head">
 			<SectionHead index="05" eyebrow="подписка">
-				{#snippet title()}всё готово с&nbsp;первого запуска{/snippet}
-				{#snippet lead()}серверы, движок протоколов и&nbsp;настройки уже внутри. оплатили, открыли hikkari и&nbsp;забыли{/snippet}
+				{#snippet title()}полный набор с&nbsp;первого запуска{/snippet}
 			</SectionHead>
 		</div>
 
@@ -66,57 +60,24 @@
 		</div>
 
 		<div class="cards">
-			<article class="card ours" data-reveal use:reveal={100}>
+			<article class="card" data-reveal use:reveal={100}>
 				<div class="card-top">
-					<h3>подписка hikkari</h3>
-					{#if launchPricing}<span class="badge">цена на запуске</span>{/if}
-				</div>
-
-				<p class="price">
-					<span class="amount">{rub(monthly)}&nbsp;₽</span>
-					<span class="unit">/ мес</span>
-				</p>
-				<p class="total">
-					{#if period.months > 1}
-						{rub(period.price)}&nbsp;₽ за&nbsp;{period.label}
-						{#if base.price * period.months > period.price}
-							<s>{rub(base.price * period.months)}&nbsp;₽</s>
-						{/if}
-					{:else}
-						оплата помесячно
-					{/if}
-				</p>
-
-				<ul class="list">
-					{#each features as f (f.name)}
-						<li class="icon-text"><span class="mark"><Icon name="check" size={18} /></span>{f.name}</li>
-					{/each}
-				</ul>
-
-				<div class="cta">
-					<Button href={checkoutUrl(period.id)}>
-						подключить за&nbsp;{rub(period.price)}&nbsp;₽ <Icon name="bolt" size={18} />
-					</Button>
-				</div>
-			</article>
-
-			<article class="card" data-reveal use:reveal={160}>
-				<div class="card-top">
-					<h3>свой сервер или чужая подписка</h3>
+					<h3>только клиент</h3>
 				</div>
 
 				<p class="price">
 					<span class="amount">0&nbsp;₽</span>
 					<span class="unit">навсегда</span>
 				</p>
-				<p class="total">клиент бесплатный, донат по&nbsp;желанию</p>
 
 				<ul class="list">
 					{#each features as f (f.name)}
-						<li class="icon-text" class:off={!f.other}>
-							<span class="mark">
-								{#if f.other}<Icon name="check" size={18} />{:else}-{/if}
-							</span>{f.name}
+						<li class:off={!f.other}>
+							<a class="icon-text" href={f.href}>
+								<span class="mark">
+									{#if f.other}<Icon name="check" size={18} />{:else}-{/if}
+								</span>{f.name}
+							</a>
 						</li>
 					{/each}
 				</ul>
@@ -127,12 +88,34 @@
 					</Button>
 				</div>
 			</article>
-		</div>
 
-		<p class="note" data-reveal use:reveal>
-			движку нужны серверы, на которых поднят весь набор протоколов. у серверов hikkari он есть, а у
-			стороннего сервера обычно один протокол, и переключаться не на что.
-		</p>
+			<article class="card ours" data-reveal use:reveal={160}>
+				<div class="card-top">
+					<h3>подписка hikkari</h3>
+				</div>
+
+				<p class="price">
+					<span class="amount">{rub(monthly)}&nbsp;₽</span>
+					<span class="unit">/ мес</span>
+				</p>
+
+				<ul class="list">
+					{#each features as f (f.name)}
+						<li>
+							<a class="icon-text" href={f.href}>
+								<span class="mark"><Icon name="check" size={18} /></span>{f.name}
+							</a>
+						</li>
+					{/each}
+				</ul>
+
+				<div class="cta">
+					<Button href={checkoutUrl(period.id)}>
+						подключить за&nbsp;{rub(period.price)}&nbsp;₽
+					</Button>
+				</div>
+			</article>
+		</div>
 	</div>
 </section>
 
@@ -147,9 +130,6 @@
 		justify-content: center;
 	}
 
-	.head :global(.lead) {
-		margin-inline: auto;
-	}
 
 	.period {
 		width: min(420px, 100%);
@@ -203,18 +183,6 @@
 		color: var(--primary);
 	}
 
-	.badge {
-		display: inline-flex;
-		align-items: center;
-		height: 28px;
-		padding: 0 10px;
-		border-radius: 999px;
-		background: rgb(var(--primary-rgb) / 0.14);
-		font-family: var(--font-mono);
-		font-size: 12px;
-		font-weight: 600;
-		color: var(--primary);
-	}
 
 	.price {
 		display: flex;
@@ -237,18 +205,7 @@
 		color: var(--text-muted);
 	}
 
-	.total {
-		min-height: 1.5em;
-		margin-top: 12px;
-		font-family: var(--font-mono);
-		font-size: 13px;
-		color: var(--text-muted);
-	}
 
-	.total s {
-		margin-left: 6px;
-		color: var(--text-faint);
-	}
 
 	.list {
 		display: grid;
@@ -259,13 +216,20 @@
 		list-style: none;
 		font-family: var(--font-mono);
 		font-size: 14px;
+		font-weight: 500;
 		color: var(--text-secondary);
 	}
 
-	.list li {
+	.list a {
 		display: flex;
 		align-items: center;
 		gap: 12px;
+		color: inherit;
+		transition: color var(--transition-hover);
+	}
+
+	.list a:hover {
+		color: var(--text);
 	}
 
 	.mark {
@@ -298,19 +262,14 @@
 		width: 100%;
 	}
 
-	.note {
-		max-width: 44em;
-		margin: 32px auto 0;
-		font-size: 13px;
-		line-height: 1.6;
-		text-align: center;
-		color: var(--text-faint);
-		text-wrap: balance;
-	}
-
 	@media (max-width: 860px) {
 		.cards {
 			grid-template-columns: minmax(0, 1fr);
+		}
+
+		/* Stacked, the paid card sits right under the period switch. */
+		.card.ours {
+			order: -1;
 		}
 	}
 

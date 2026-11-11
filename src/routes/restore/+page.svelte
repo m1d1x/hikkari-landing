@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { afterNavigate } from '$app/navigation';
 	import { BillingError, recoverLinks } from '#lib/billing.ts';
 	import PayShell from '#lib/sections/PayShell.svelte';
 	import Button from '#lib/ui/Button.svelte';
@@ -10,6 +11,23 @@
 	let busy = $state(false);
 	let sent = $state(false);
 	let error = $state('');
+
+	// Opened from the checkout: «back» returns to it with the same period.
+	let back = $state({ href: '/#pricing', label: '← к тарифам' });
+	afterNavigate(({ from }) => {
+		// In-app navigation brings `from`; a full page load from /pay has only the referrer.
+		let url = from?.url;
+		if (!url && document.referrer) {
+			try {
+				url = new URL(document.referrer);
+			} catch {
+				// unreadable referrer: keep the pricing link
+			}
+		}
+		if (url && url.origin === location.origin && url.pathname.startsWith('/pay')) {
+			back = { href: url.pathname + url.search, label: '← к оплате' };
+		}
+	});
 
 	async function submit(e: SubmitEvent) {
 		e.preventDefault();
@@ -33,7 +51,7 @@
 	}
 </script>
 
-<PayShell title="восстановить ссылку">
+<PayShell title="восстановить ссылку" {back}>
 	{#if sent}
 		<p class="lead">
 			если на {email.trim()} оформляли подписку hikkari, письмо со ссылкой придёт в течение пары минут. проверьте папку

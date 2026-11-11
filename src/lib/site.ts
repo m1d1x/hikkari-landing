@@ -1,12 +1,4 @@
-/** Site-wide facts in one place: navigation, outbound links, downloads. */
-
-export const nav = [
-	{ href: '/#engine', label: 'движок' },
-	{ href: '/#routing', label: 'маршрутизация' },
-	{ href: '/#relay', label: 'серверы' },
-	{ href: '/#import', label: 'импорт' },
-	{ href: '/#faq', label: 'faq' }
-] as const;
+/** Site-wide facts in one place: outbound links, downloads. */
 
 export const legal = [
 	{ href: '/offer', label: 'публичная оферта' },

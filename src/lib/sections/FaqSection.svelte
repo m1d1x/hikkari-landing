@@ -2,10 +2,20 @@
 	import { reveal } from '#lib/actions/reveal.ts';
 	import Icon from '#lib/ui/Icon.svelte';
 
-	const faq = [
+	type Item = { q: string; a: string };
+
+	const clientFaq: Item[] = [
 		{
 			q: 'нужна ли подписка hikkari?',
 			a: 'нет. можно вставить подписку другого сервиса или ссылку на свой сервер: маршрутизация, готовые группы и автовыбор сервера работают и с ними. подписка hikkari добавляет движок протоколов и наши серверы.'
+		},
+		{
+			q: 'как активировать подписку после оплаты?',
+			a: 'сразу после оплаты на странице появится кнопка «открыть в hikkari». клик по ней добавляет подписку в приложение. ссылка на подписку также придёт на email.'
+		},
+		{
+			q: 'как продлить подписку?',
+			a: 'в профиле в hikkari есть кнопка «продлить». или оплатите нужный период на сайте с тем же email, и срок прибавится.'
 		},
 		{
 			q: 'какие ссылки и форматы поддерживаются?',
@@ -28,6 +38,9 @@
 			a: 'само: hikkari скачивает обновление в фоне и проверяет его цифровую подпись перед установкой.'
 		}
 	];
+
+	// Pages may pass their own questions.
+	let { items = clientFaq }: { items?: Item[] } = $props();
 </script>
 
 <section class="section" id="faq">
@@ -38,7 +51,7 @@
 		</header>
 
 		<div class="list" data-reveal use:reveal={80}>
-			{#each faq as item (item.q)}
+			{#each items as item (item.q)}
 				<details>
 					<summary>
 						<span>{item.q}</span>
